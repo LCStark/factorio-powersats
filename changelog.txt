@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 2023-12-02
+  Locale:
+    - moved all name and description strings into locale file
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 2023-11-30
+  Major Features:
+    - `powerSat` satellite to launch from the Rocket Silo
+    - ground station to receive produced power
+    - powersat combinator outputting number of active satellites as a signal
+  Modding:
+    - Space Exploration compatibility - satellites can be launched from planets
+      and moons with the Satellite Rocket Silo, or from orbit of a planet/moon
+      with the Space Probe Silo; Launching from orbit will generate power
+      for the surface below.
