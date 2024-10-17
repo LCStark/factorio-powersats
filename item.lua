@@ -1,7 +1,7 @@
 local powerSatItem = table.deepcopy(data.raw["item"]["satellite"]) 
 
 powerSatItem["name"] = "powerSat"
-powerSatItem["rocket_launch_products"] = {}
+powerSatItem["rocket_launch_product"] = nil
 powerSatItem["icons"] = {
   {
     icon = "__PowerSats__/graphics/technology/powerSat.png",
