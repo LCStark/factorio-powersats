@@ -27,11 +27,16 @@ local powerSatTechnology = {
       effect_description = {"control.powersat-control"},
     },
   },
-  unit = {
-    count = data.raw["technology"]["space-science-pack"]["unit"]["count"] * 0.25,
-    time = data.raw["technology"]["space-science-pack"]["unit"]["time"] * 2,
-    ingredients = data.raw["technology"]["space-science-pack"]["unit"]["ingredients"],
+  research_trigger =
+  {
+    type = "send-item-to-orbit",
+    item = "satellite"
   },
+  --unit = {
+  --  count = data.raw["technology"]["space-science-pack"]["unit"]["count"] * 0.25,
+  --  time = data.raw["technology"]["space-science-pack"]["unit"]["time"] * 2,
+  --  ingredients = data.raw["technology"]["space-science-pack"]["unit"]["ingredients"],
+  --},
 }
 
 data:extend({powerSatTechnology})

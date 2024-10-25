@@ -4,7 +4,9 @@ local groundStationEntity = {
   type = "electric-energy-interface",
   name = "powersat-ground-station-entity",
   selectable_in_game = true,
-  collision_mask = { "item-layer", "object-layer", "player-layer", "water-tile" },
+  collision_mask = { 
+    layers = { item = true, object = true, player = true, water_tile = true },
+  },
   energy_source = {
     buffer_capacity = "200MJ",
     input_flow_limit = "0kW",
@@ -74,42 +76,27 @@ PowerSatCombinatorEntity.name = "powersat-combinator"
 PowerSatCombinatorEntity.sprites = make_4way_animation_from_spritesheet {
   layers = {
     {
-      filename = "__PowerSats__/graphics/entity/powersat-combinator.png",
-      width = 58,
-      height = 52,
+      scale = 0.5,
+      filename = "__PowerSats__/graphics/entity/hr-powersat-combinator.png",
+      width = 114,
+      height = 102,
       frame_count = 1,
-      shift = util.by_pixel(0, 5),
-      hr_version = {
-        scale = 0.5,
-        filename = "__PowerSats__/graphics/entity/hr-powersat-combinator.png",
-        width = 114,
-        height = 102,
-        frame_count = 1,
-        shift = util.by_pixel(0, 5)
-      }
+      shift = util.by_pixel(0, 5)
     },
     {
+      scale = 0.5,
       filename = "__base__/graphics/entity/combinator/constant-combinator-shadow.png",
-      width = 50,
-      height = 30,
+      width = 98,
+      height = 66,
       frame_count = 1,
-      shift = util.by_pixel(9, 6),
-      draw_as_shadow = true,
-      hr_version = {
-        scale = 0.5,
-        filename = "__base__/graphics/entity/combinator/hr-constant-combinator-shadow.png",
-        width = 98,
-        height = 66,
-        frame_count = 1,
-        shift = util.by_pixel(8.5, 5.5),
-        draw_as_shadow = true
-      }
+      shift = util.by_pixel(8.5, 5.5),
+      draw_as_shadow = true
     }
   }
 }
 PowerSatCombinatorEntity.minable = { mining_time = 0.1, result = "powersat-combinator" }
 PowerSatCombinatorEntity.fast_replaceable_group = "powersat-combinator"
-PowerSatCombinatorEntity.openable = false
-PowerSatCombinatorEntity.flags = { "placeable-neutral", "player-creation", "no-copy-paste" }
+PowerSatCombinatorEntity.operable = false
+PowerSatCombinatorEntity.flags = { "placeable-player", "player-creation", "no-copy-paste" }
 
 data:extend({ PowerSatCombinatorEntity })

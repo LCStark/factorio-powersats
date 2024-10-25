@@ -17,7 +17,7 @@ end
 
 function on_rocket_launched(event)
   if event.rocket and event.rocket.valid then
-    if event.rocket.get_item_count("powerSat") > 0 then
+    if event.rocket.cargo_pod and event.rocket.cargo_pod.get_item_count("powerSat") > 0 then
       on_satellite_launched(event.rocket.force, event.rocket.surface, "powerSat")
     end
   end
@@ -25,41 +25,41 @@ end
 script.on_event(defines.events.on_rocket_launched, on_rocket_launched)
 
 function on_init()
-  if global.powersats == nil then global.powersats = {} end  
-  if global.powersats["satellite_data"] == nil then global.powersats["satellite_data"] = {} end
-  if global.powersats["data"] == nil then global.powersats["data"] = {} end
-  if global.powersats["ground_stations"] == nil then global.powersats["ground_stations"] = {} end
+  if storage.powersats == nil then storage.powersats = {} end  
+  if storage.powersats["satellite_data"] == nil then storage.powersats["satellite_data"] = {} end
+  if storage.powersats["data"] == nil then storage.powersats["data"] = {} end
+  if storage.powersats["ground_stations"] == nil then storage.powersats["ground_stations"] = {} end
   
-  global.powersats["data"]["baseSolarProduction"] = game.entity_prototypes["solar-panel"].max_energy_production -- Joules per tick
-  global.powersats["data"]["baseSolarProductionW"] = game.entity_prototypes["solar-panel"].max_energy_production * 60 -- Joules per second
-  global.powersats["data"]["solarSatMultiplier"] = 100
+  storage.powersats["data"]["baseSolarProduction"] = prototypes.entity["solar-panel"].get_max_energy_production() -- Joules per tick
+  storage.powersats["data"]["baseSolarProductionW"] = prototypes.entity["solar-panel"].get_max_energy_production() * 60 -- Joules per second
+  storage.powersats["data"]["solarSatMultiplier"] = 100
   
-  global.powersats["data"]["powerGeneration"] = {}
-  global.powersats["data"]["powerGeneration"]["powerSat"] = global.powersats["data"]["baseSolarProduction"]
-  PowerSats.powerGeneration = global.powersats["data"]["powerGeneration"]
+  storage.powersats["data"]["powerGeneration"] = {}
+  storage.powersats["data"]["powerGeneration"]["powerSat"] = storage.powersats["data"]["baseSolarProduction"]
+  PowerSats.powerGeneration = storage.powersats["data"]["powerGeneration"]
     
-  if global.powersats["data"]["lifetime"] == nil then global.powersats["data"]["lifetime"] = {} end
-  global.powersats["data"]["lifetime"]["powerSat"] = 4320000
-  PowerSats.lifetime = global.powersats["data"]["lifetime"]
+  if storage.powersats["data"]["lifetime"] == nil then storage.powersats["data"]["lifetime"] = {} end
+  storage.powersats["data"]["lifetime"]["powerSat"] = 4320000
+  PowerSats.lifetime = storage.powersats["data"]["lifetime"]
     
-  global.powersats["combinators"] = {}
+  storage.powersats["combinators"] = {}
   
-  if global.powersats["data"]["mod_compat"] == nil then global.powersats["data"]["mod_compat"] = {} end
+  if storage.powersats["data"]["mod_compat"] == nil then storage.powersats["data"]["mod_compat"] = {} end
   
-  if game.active_mods["space-exploration"] then
+  if script.active_mods["space-exploration"] then
     PowerSats.SE = true
-    global.powersats["data"]["mod_compat"]["space-exploration"] = true
+    storage.powersats["data"]["mod_compat"]["space-exploration"] = true
   else
     PowerSats.SE = false
-    global.powersats["data"]["mod_compat"]["space-exploration"] = false
+    storage.powersats["data"]["mod_compat"]["space-exploration"] = false
   end
 end
 script.on_init(on_init)
 
 function on_load()
-  PowerSats.powerGeneration = global.powersats["data"]["powerGeneration"]
-  PowerSats.lifetime = global.powersats["data"]["lifetime"]
-  PowerSats.SE = global.powersats["data"]["mod_compat"]["space-exploration"]
+  PowerSats.powerGeneration = storage.powersats["data"]["powerGeneration"]
+  PowerSats.lifetime = storage.powersats["data"]["lifetime"]
+  PowerSats.SE = storage.powersats["data"]["mod_compat"]["space-exploration"]
 end
 script.on_load(on_load)
 
@@ -85,7 +85,7 @@ function on_config_change()
   PowerSats.lifetime = {}
   PowerSats.lifetime["powerSat"] = 4320000
   
-  if game.active_mods["space-exploration"] then
+  if script.active_mods["space-exploration"] then
     PowerSats.SE = true
   else
     PowerSats.SE = false
@@ -108,13 +108,13 @@ end)
 -- Combined events
 script.on_event(defines.events.on_built_entity, function(data)
 
-  PowerSats.EntityBuilt(data.created_entity)
+  PowerSats.EntityBuilt(data.entity)
   
 end, { { filter = "name", name="powersat-ground-station-entity" }, { filter = "name", name="powersat-combinator" } })
 
 script.on_event(defines.events.on_robot_built_entity, function(data)
 
-  PowerSats.EntityBuilt(data.created_entity)
+  PowerSats.EntityBuilt(data.entity)
 
 end, { { filter = "name", name="powersat-ground-station-entity" }, { filter = "name", name="powersat-combinator" } })
 

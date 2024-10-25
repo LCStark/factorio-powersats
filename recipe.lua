@@ -4,24 +4,29 @@ local powerSatRecipe = {
   energy_required = 5,
   ingredients = {
     {
-      "electronic-circuit",
-      10
+      type = "item",
+      name = "electronic-circuit",
+      amount = 10
     },
     {
-      "low-density-structure",
-      10
+      type = "item",
+      name = "low-density-structure",
+      amount = 10
     },
     {
-      "rocket-fuel",
-      5
+      type = "item",
+      name = "rocket-fuel",
+      amount = 5
     },
     {
-      "solar-panel",
-      10
+      type = "item",
+      name = "solar-panel",
+      amount = 10
     }
   },
   name = "powerSat",
-  result = "powerSat",
+  --result = "powerSat",
+  results = {{type = "item", name = "powerSat", amount = 1}},
   requester_paste_multiplier = 1,
   type = "recipe",
   order = "m[satellite]-power",
@@ -40,12 +45,13 @@ local groundStationRecipe = {
   type = "recipe",
   name = "powersat-ground-station-recipe",
   ingredients = {
-    { "steel-plate", 500 },
-    { "concrete", 500 },
-    { "processing-unit", 100 },
-    { "substation", 10 }
+    { type = "item", name = "steel-plate", amount = 500 },
+    { type = "item", name = "concrete", amount = 500 },
+    { type = "item", name = "processing-unit", amount = 100 },
+    { type = "item", name = "substation", amount = 10 }
   },
-  result = "powersat-ground-station-item",
+  --result = "powersat-ground-station-item",
+  results = {{type = "item", name = "powersat-ground-station-item", amount = 1}},
   energy_required = 60,
   enabled = false
 }
@@ -57,6 +63,7 @@ powerSatCombinatorRecipe.name = "powersat-combinator"
 powerSatCombinatorRecipe.enabled = false
 powerSatCombinatorRecipe.results = {
   {
+    type = "item",
     name = "powersat-combinator",
     amount = 1,
     probability = 1
