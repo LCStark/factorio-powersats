@@ -27,7 +27,9 @@ function PowerSats.LaunchPowerSat(_force, _surface, _sat_type)
   if surface_table["power_multiplier"] == nil then
     if PowerSats.SE then
       surface_table["power_multiplier"] = PowerSats.SEGetOrbitSolarPercent(_surface.index) * 10
-    else 
+    elseif PowerSats.SA then
+      surface_table["power_multiplier"] = _surface.planet.prototype.solar_power_in_space / 10
+    else      
       surface_table["power_multiplier"] = storage.powersats["data"]["solarSatMultiplier"]
     end
   end
@@ -313,7 +315,7 @@ function PowerSats.EntityBuilt(_entity)
   _entity.operable = false
 
   local f_tab = {}
-  f_tab["powersat-ground-station-entity"] = PowerSats.GroundStationBuilt
+  f_tab["powersat-ground-station"] = PowerSats.GroundStationBuilt
   f_tab["powersat-combinator"] = PowerSats.CombinatorBuilt
   
   local func = f_tab[_entity.name]
@@ -324,7 +326,7 @@ end
 
 function PowerSats.EntityRemoved(_entity)
   local f_tab = {}
-  f_tab["powersat-ground-station-entity"] = PowerSats.GroundStationRemoved
+  f_tab["powersat-ground-station"] = PowerSats.GroundStationRemoved
   f_tab["powersat-combinator"] = PowerSats.CombinatorRemoved
   
   local func = f_tab[_entity.name]

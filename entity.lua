@@ -2,7 +2,7 @@
 
 local groundStationEntity = {
   type = "electric-energy-interface",
-  name = "powersat-ground-station-entity",
+  name = "powersat-ground-station",
   selectable_in_game = true,
   collision_mask = { 
     layers = { item = true, object = true, player = true, water_tile = true },
@@ -21,7 +21,7 @@ local groundStationEntity = {
   icon_size = 64,
   minable = {
     mining_time = 0.5,
-    result = "powersat-ground-station-item",
+    result = "powersat-ground-station",
   },
   max_health = 2500,
   collision_box = {
@@ -57,6 +57,7 @@ local groundStationEntity = {
   discharge_cooldown = 60,
   
   gui_mode = "none",
+  hidden_in_factoriopedia = true
 }
 
 if mods["space-exploration"] then
@@ -64,6 +65,15 @@ if mods["space-exploration"] then
   space_collision_layer = collision_mask_util_extended.get_make_named_collision_mask("space-tile")
   table.insert(groundStationEntity["collision_mask"], space_collision_layer)
   groundStationEntity["se_allow_in_space"] = false
+end
+
+if feature_flags["space_travel"] then
+  groundStationEntity.surface_conditions = {
+    {
+      property = "pressure",
+      min = 1
+    }
+  }
 end
 
 data:extend({ groundStationEntity })
@@ -98,5 +108,14 @@ PowerSatCombinatorEntity.minable = { mining_time = 0.1, result = "powersat-combi
 PowerSatCombinatorEntity.fast_replaceable_group = "powersat-combinator"
 PowerSatCombinatorEntity.operable = false
 PowerSatCombinatorEntity.flags = { "placeable-player", "player-creation", "no-copy-paste" }
+
+if feature_flags["space_travel"] then
+  PowerSatCombinatorEntity.surface_conditions = {
+    {
+      property = "pressure",
+      min = 1
+    }
+  }
+end
 
 data:extend({ PowerSatCombinatorEntity })

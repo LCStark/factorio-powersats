@@ -43,7 +43,7 @@ data:extend({ powerSatRecipe })
 
 local groundStationRecipe = {
   type = "recipe",
-  name = "powersat-ground-station-recipe",
+  name = "powersat-ground-station",
   ingredients = {
     { type = "item", name = "steel-plate", amount = 500 },
     { type = "item", name = "concrete", amount = 500 },
@@ -51,7 +51,7 @@ local groundStationRecipe = {
     { type = "item", name = "substation", amount = 10 }
   },
   --result = "powersat-ground-station-item",
-  results = {{type = "item", name = "powersat-ground-station-item", amount = 1}},
+  results = {{type = "item", name = "powersat-ground-station", amount = 1}},
   energy_required = 60,
   enabled = false
 }

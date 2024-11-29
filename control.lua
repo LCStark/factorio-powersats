@@ -15,14 +15,12 @@ function on_satellite_launched(force, surface, satellite_type)
   PowerSats.LaunchPowerSat(force, surface, "powerSat")
 end
 
-function on_rocket_launched(event)
-  if event.rocket and event.rocket.valid then
-    if event.rocket.cargo_pod and event.rocket.cargo_pod.get_item_count("powerSat") > 0 then
-      on_satellite_launched(event.rocket.force, event.rocket.surface, "powerSat")
-    end
+function on_cargo_pod_finished_ascending(event)
+  if event.cargo_pod and event.cargo_pod.get_item_count({type = "item", name = "powerSat"}) > 0 then
+    on_satellite_launched(event.cargo_pod.force, event.cargo_pod.surface, "powerSat")
   end
 end
-script.on_event(defines.events.on_rocket_launched, on_rocket_launched)
+script.on_event(defines.events.on_cargo_pod_finished_ascending, on_cargo_pod_finished_ascending)
 
 function on_init()
   if storage.powersats == nil then storage.powersats = {} end  
@@ -53,6 +51,14 @@ function on_init()
     PowerSats.SE = false
     storage.powersats["data"]["mod_compat"]["space-exploration"] = false
   end
+  
+  if script.active_mods["space-age"] then
+    PowerSats.SA = true
+    storage.powersats["data"]["mod_compat"]["space-age"] = true
+  else
+    PowerSats.SA = false
+    storage.powersats["data"]["mod_compat"]["space-age"] = false
+  end
 end
 script.on_init(on_init)
 
@@ -60,6 +66,7 @@ function on_load()
   PowerSats.powerGeneration = storage.powersats["data"]["powerGeneration"]
   PowerSats.lifetime = storage.powersats["data"]["lifetime"]
   PowerSats.SE = storage.powersats["data"]["mod_compat"]["space-exploration"]
+  PowerSats.SA = storage.powersats["data"]["mod_compat"]["space-age"]
 end
 script.on_load(on_load)
 
@@ -90,6 +97,12 @@ function on_config_change()
   else
     PowerSats.SE = false
   end
+  
+  if script.active_mods["space-age"] then
+    PowerSats.SA = true
+  else
+    PowerSats.SA = false
+  end
 end
 script.on_configuration_changed(on_config_change)
 
@@ -110,28 +123,28 @@ script.on_event(defines.events.on_built_entity, function(data)
 
   PowerSats.EntityBuilt(data.entity)
   
-end, { { filter = "name", name="powersat-ground-station-entity" }, { filter = "name", name="powersat-combinator" } })
+end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
 
 script.on_event(defines.events.on_robot_built_entity, function(data)
 
   PowerSats.EntityBuilt(data.entity)
 
-end, { { filter = "name", name="powersat-ground-station-entity" }, { filter = "name", name="powersat-combinator" } })
+end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
 
 script.on_event(defines.events.on_player_mined_entity, function(data)
   
   PowerSats.EntityRemoved(data.entity)
   
-end, { { filter = "name", name="powersat-ground-station-entity" }, { filter = "name", name="powersat-combinator" } })
+end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
 
 script.on_event(defines.events.on_robot_mined_entity, function(data)
   
   PowerSats.EntityRemoved(data.entity)
   
-end, { { filter = "name", name="powersat-ground-station-entity" }, { filter = "name", name="powersat-combinator" } })
+end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
 
 script.on_event(defines.events.on_entity_died, function(data)
 
   PowerSats.EntityRemoved(data.entity)
 
-end, { { filter = "name", name="powersat-ground-station-entity" }, { filter = "name", name="powersat-combinator" } })
+end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })

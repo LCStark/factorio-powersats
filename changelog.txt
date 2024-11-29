@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 2024-11-29
+  Modding:
+    - Space Age compatibility - satellites can be launched from planets and will
+      generate power based on that planet's solar power in space multiplier; you
+      can only build the receiver ground stations on planets
+---------------------------------------------------------------------------------------------------
 Version: 0.1.3
 Date: 2024-10-25
   Changes:
