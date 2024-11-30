@@ -26,8 +26,7 @@ local powerSatItem = {
 
 data:extend({powerSatItem})
 
---data.raw["item"]["solar-panel"].send_to_orbit_mode = "manual"
---data.raw["item"]["accumulator"].send_to_orbit_mode = "automated"
+data.raw["item"]["solar-panel"].send_to_orbit_mode = "manual"
 
 local powerSatGroundStationItem  = {
   type = "item",
