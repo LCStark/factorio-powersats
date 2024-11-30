@@ -1,9 +1,9 @@
 {
   "name": "PowerSats",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "title": "Power Satellites",
   "author": "LCStark",
   "factorio_version": "2.0",
-  "dependencies": ["base <= 2.0.21", "? space-exploration >= 0.6.113", "? space-age <= 2.0.21"],
+  "dependencies": ["base >= 2.0.22", "? space-exploration >= 0.6.113", "? space-age >= 2.0.22"],
   "description": "This mod adds power satellites, which can be launched with the rocket silo to generate power and beam it down to receiver stations."
 }
