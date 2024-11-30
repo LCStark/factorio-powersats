@@ -15,12 +15,34 @@ function on_satellite_launched(force, surface, satellite_type)
   PowerSats.LaunchPowerSat(force, surface, "powerSat")
 end
 
-function on_cargo_pod_finished_ascending(event)
-  if event.cargo_pod and event.cargo_pod.get_item_count({type = "item", name = "powerSat"}) > 0 then
-    on_satellite_launched(event.cargo_pod.force, event.cargo_pod.surface, "powerSat")
+-- function on_cargo_pod_finished_ascending(event)
+  -- if event.cargo_pod and event.cargo_pod.get_item_count({type = "item", name = "powerSat"}) > 0 then
+    -- on_satellite_launched(event.cargo_pod.force, event.cargo_pod.surface, "powerSat")
+  -- end
+-- end
+-- script.on_event(defines.events.on_cargo_pod_finished_ascending, on_cargo_pod_finished_ascending)
+
+---- 2.0.21 compatibility patch
+function on_rocket_launch_ordered(event)
+  if event.rocket and event.rocket.valid then
+    if event.rocket.cargo_pod and event.rocket.cargo_pod.get_item_count("powerSat") > 0 then
+      storage.powersats["data"]["stored_pods"] = storage.powersats["data"]["stored_pods"] or {}
+      storage.powersats["data"]["stored_pods"][event.rocket_silo.unit_number] = storage.powersats["data"]["stored_pods"][event.rocket_silo.unit_number] or {}
+      table.insert(storage.powersats["data"]["stored_pods"][event.rocket_silo.unit_number], event.rocket.cargo_pod)
+    end
   end
 end
-script.on_event(defines.events.on_cargo_pod_finished_ascending, on_cargo_pod_finished_ascending)
+script.on_event(defines.events.on_rocket_launch_ordered, on_rocket_launch_ordered)
+
+function on_rocket_launched(event)
+  if storage.powersats["data"]["stored_pods"] ~= nil and #storage.powersats["data"]["stored_pods"][event.rocket_silo.unit_number] > 0 then
+    local cargo_pod = storage.powersats["data"]["stored_pods"][event.rocket_silo.unit_number][1]
+    on_satellite_launched(cargo_pod.force, cargo_pod.surface, "powerSat")
+    table.remove(storage.powersats["data"]["stored_pods"][event.rocket_silo.unit_number], 1)
+  end
+end
+script.on_event(defines.events.on_rocket_launched, on_rocket_launched)
+----
 
 function on_init()
   if storage.powersats == nil then storage.powersats = {} end  
