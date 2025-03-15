@@ -16,7 +16,9 @@ function on_satellite_launched(force, surface, satellite_type)
 end
 
 function on_cargo_pod_finished_ascending(event)
-  if event.cargo_pod and event.cargo_pod.get_item_count({type = "item", name = "powerSat"}) > 0 then
+  if not event.launched_by_rocket then return end
+  if not event.cargo_pod then return end
+  if event.cargo_pod.get_item_count({type = "item", name = "powerSat"}) > 0 then
     on_satellite_launched(event.cargo_pod.force, event.cargo_pod.surface, "powerSat")
   end
 end
