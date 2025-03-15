@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.5
+Date: 2025-03-15
+  Bugfixes:
+    - fixed the crash on invalid entities (entities are now removed from data and log is posted)
+    - updated logging function to use LuaHelpers
+---------------------------------------------------------------------------------------------------
 Version: 0.2.4
 Date: 2025-01-08
   Bugfixes:

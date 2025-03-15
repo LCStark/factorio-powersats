@@ -224,9 +224,12 @@ function PowerSats.GroundStationIterateSurface(_surface_index, _surface_table, _
   local powerPerStation = powerProduced / _surface_table["count"]
   
   for k, v in pairs(_surface_table["stations"]) do
-  
-    v.energy = powerPerStation
-  
+    if v.valid then
+      v.energy = powerPerStation
+    else
+      helpers.write_file("powersat.log", "Invalid ground station entity, force `" .. _force_index .. "` surface `" .. _surface_index .. "`, removing.\n", true)
+      _surface_table["stations"][k] = nil;
+    end
   end
   
 end
@@ -294,7 +297,10 @@ function PowerSats.UpdateCombinators(_force, _surface)
   if (storage.powersats["combinators"][_force][_surface]) == nil then return end
 
   for k,v in pairs(storage.powersats["combinators"][_force][_surface]) do
-    if storage.powersats["satellite_data"][_force] ~= nil and storage.powersats["satellite_data"][_force][_surface] ~= nil then
+    if not v.valid then
+      helpers.write_file("powersat.log", "Invalid combinator entity, force `" .. _force .. "` surface `" .. _surface .. "`, removing.\n", true)
+      storage.powersats["combinators"][_force][_surface][k] = nil;
+    elseif storage.powersats["satellite_data"][_force] ~= nil and storage.powersats["satellite_data"][_force][_surface] ~= nil then
   
       for l,b in pairs(storage.powersats["satellite_data"][_force][_surface]["satellite_data"]) do
         local count = b["count"]        

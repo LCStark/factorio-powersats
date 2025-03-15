@@ -3,12 +3,12 @@ local PowerSats = require("powersats")
 function on_satellite_launched(force, surface, satellite_type)
     local launch_surface = surface.index
     if not launch_surface then
-      game.write_file("powersat.log", "on_satellite_launched called on invalid surface: force: `" .. serpent.block(force.name) .. "` - surface: `" .. serpent.block(surface) .. "`\n", true)
+      helpers.write_file("powersat.log", "on_satellite_launched called on invalid surface: force: `" .. serpent.block(force.name) .. "` - surface: `" .. serpent.block(surface) .. "`\n", true)
       return
     end
     
     if not game.forces[force.name] then
-      game.write_file("powersat.log", "on_satellite_launched called on invalid force: force: `" .. serpent.block(force.name) .. "` - surface: `" .. serpent.block(surface) .. "`\n", true)
+      helpers.write_file("powersat.log", "on_satellite_launched called on invalid force: force: `" .. serpent.block(force.name) .. "` - surface: `" .. serpent.block(surface) .. "`\n", true)
       return
     end
   
