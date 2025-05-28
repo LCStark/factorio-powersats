@@ -131,7 +131,6 @@ end)
 
 -- Combined events
 script.on_event(defines.events.on_built_entity, function(data)
-
   PowerSats.EntityBuilt(data.entity)
   
 end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
@@ -140,6 +139,18 @@ script.on_event(defines.events.on_robot_built_entity, function(data)
 
   PowerSats.EntityBuilt(data.entity)
 
+end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
+
+script.on_event(defines.events.script_raised_built, function(data)
+
+  PowerSats.EntityBuilt(data.entity)
+  
+end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
+
+script.on_event(defines.events.script_raised_revive, function(data)
+
+  PowerSats.EntityBuilt(data.entity)
+  
 end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
 
 script.on_event(defines.events.on_player_mined_entity, function(data)
@@ -158,4 +169,10 @@ script.on_event(defines.events.on_entity_died, function(data)
 
   PowerSats.EntityRemoved(data.entity)
 
+end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
+
+script.on_event(defines.events.script_raised_destroy, function(data)
+
+  PowerSats.EntityRemoved(data.entity)
+  
 end, { { filter = "name", name="powersat-ground-station" }, { filter = "name", name="powersat-combinator" } })
