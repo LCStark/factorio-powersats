@@ -60,13 +60,6 @@ local groundStationEntity = {
   hidden_in_factoriopedia = true
 }
 
-if mods["space-exploration"] then
-  collision_mask_util_extended = require("__space-exploration__/collision-mask-util-extended/data/collision-mask-util-extended")
-  space_collision_layer = collision_mask_util_extended.get_make_named_collision_mask("space-tile")
-  table.insert(groundStationEntity["collision_mask"], space_collision_layer)
-  groundStationEntity["se_allow_in_space"] = false
-end
-
 if feature_flags["space_travel"] then
   groundStationEntity.surface_conditions = {
     {

@@ -3,15 +3,13 @@ local PowerSats = {}
 function PowerSats.LaunchPowerSat(_force, _surface, _sat_type)
   if PowerSats.SE then
     local zone = remote.call("space-exploration", "get_zone_from_surface_index", { surface_index = _surface.index })
+    local parent = remote.call("space-exploration", "get_zone_from_zone_index", { zone_index = zone.parent_index })
     
-    if zone.type == "orbit" and zone.parent and zone.parent.type ~= "star" then
-      local parent_zone = remote.call("space-exploration", "get_zone_from_zone_index", { zone_index = zone.parent_index })
-      if parent_zone.surface_index then
-        _surface = game.surfaces[parent_zone.surface_index]
+    if zone.type == "orbit" and parent and parent.type ~= "star" then
+      if parent.surface_index then
+        _surface = game.surfaces[parent.surface_index]
       end
-    end
-    
-    if zone.type ~= "planet" and zone.type ~= "moon" then
+    elseif zone.type ~= "planet" and zone.type ~= "moon" then
       return
     end
   end
@@ -76,16 +74,8 @@ function PowerSats.SEGetOrbitSolarPercent(_surface_index)
     return 0
   end
   
-  star_zone = remote.call("space-exploration", "get_zone_from_zone_index", { zone_index = planet_zone.parent_index })
-  
-  local percent = 1.6 * planet_zone.star_gravity_well / (star_zone.star_gravity_well + 1)
-  percent = percent * 5
-  percent = percent * (1 - 0.1 * planet_zone.radius / 10000)
-  percent = percent + 0.01
-  percent = percent * 2
-  
-  return percent
-
+  local percent = remote.call("space-exploration", "solar_for_surface", {surface_index = orbit_zone.surface_index})
+  return percent * 2
 end
 
 function PowerSats.UpdateTick()

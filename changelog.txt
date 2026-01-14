@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.7
+Date: 2026-01-14
+  Bugfixes:
+    - fixed crash related to SE collision layers
+    - fixed launching satellite from orbit not adding power production
+      for surface below
+  Info:
+    - added custom SE tooltip with surface placement restrictions to the ground
+      station
+---------------------------------------------------------------------------------------------------
 Version: 0.2.6
 Date: 2025-05-28
   Bugfixes:
@@ -7,7 +17,8 @@ Date: 2025-05-28
 Version: 0.2.5
 Date: 2025-03-15
   Bugfixes:
-    - fixed the crash on invalid entities (entities are now removed from data and log is posted)
+    - fixed the crash on invalid entities (entities are now removed from data
+      and log is posted)
     - updated logging function to use LuaHelpers
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.4
@@ -45,7 +56,8 @@ Date: 2024-10-25
 Version: 0.1.2
 Date: 2024-10-17
   Bugfixes:
-    - fixed a bug causing crash on game start when used with Pneumatic Transport mod
+    - fixed a bug causing crash on game start when used with Pneumatic Transport
+      mod
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.1
 Date: 2023-12-02

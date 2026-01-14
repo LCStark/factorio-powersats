@@ -13,3 +13,10 @@ data.extend({
   hidden_in_factoriopedia = true
 }
 })
+
+if mods["space-exploration"] then
+  data.raw["electric-energy-interface"]["powersat-ground-station"].se_allow_in_space = false
+  data.raw["electric-energy-interface"]["powersat-ground-station"]["collision_mask"]["layers"][space_collision_layer] = true
+  local se_data_util = require("__space-exploration__/data_util")
+  se_data_util.collision_description(data.raw["electric-energy-interface"]["powersat-ground-station"])
+end
